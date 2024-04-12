@@ -15,55 +15,28 @@ devrev snap_in_version init
 4. This will create a snap-in template codein that folder
 5. There will be many files/folders in the template, but our main focus is on just few files
 6. First is manifest.yaml, here we define the name of our snap-in, its description,functions and event(command/automation) etc
-7. Now based on the fuctions defined in this .yaml, we define the fuctions in the function folder
-8. Here for hello_world snap-in 
-
-### Testing locally
-You can test your code by adding test events under `src/fixtures` similar to the example event provided. You can add keyring values to the event payload to test API calls as well.
-
-Once you have added the event, you can test your code by running:
+7. Now based on the fuctions defined in this .yaml, we define the fuctions in the function folder(which is inside code folder)
+8. Here for hello_world snap-in, in the function that we create(or rename the default fn and make necessary changes in related files) in run fn we get all the objects that trigger the event defined in .yaml file. now these events are looped and handleevent() is called.
+9. Now for helloworld snapin we write a console.log("hello world") in this handleevent(), so whenever and event is created "hello world is printed"
+10. Now in the code directory run the following commands
 ```
 npm install
-npm run start -- --functionName=on_work_creation --fixturePath=on_work_created_event.json
+npm run build
+npm run package
 ```
-
-### Adding external dependencies
-You can also add dependencies on external packages in package.json under the “dependencies” key. These dependencies will be made available to your function at runtime and testing.
-
-### Linting
-
-To check for lint errors, run the following command:
-
-```bash
-npm run lint
+11. These will install all the node modules and ready the package for deployment
+12. Then to create a snap-in package, run the following command:
+ ```
+ devrev snap_in_package create-one --slug my-first-snap-in | jq .
+ ```
+13.Then to create a snap-in version, run the following command:(path must be of the parent of code folder) 
 ```
-
-To automatically fix fixable lint errors, run:
-
-```bash
-npm run lint:fix
+devrev snap_in_version create-one --path ./devrev-snaps-typescript-template | jq .
 ```
-
-### Deploying Snap-Ins
-Once you are done with the testing, run the following commands to deploy your snap_in:
-
-1. Authenticate to devrev CLI
-```
-devrev profiles authenticate --org <devorg name> --usr <user email>
-```
-2. Create a snap_in_version
-```
-devrev snap_in_version create-one --path <template path> --create-package
-```
-3. Draft the snap_in
+14. Then to finally create a snap-in from a snap-in version, we run the following command:
 ```
 devrev snap_in draft
 ```
-4. Update the snap_in
-```
-devrev snap_in update
-```
-5. Deploy the snap_in
-```
-devrev snap_in deploy
-```
+15. Now this will be installed in our devrev UI, now we have to install it from there
+16. so go to settings->snap-in, the name that we have given to our snapin .yaml will be on of the snap-in
+17. Install it from there,so now our snap-in is successfully installed, and try it when we create a new workitem 
