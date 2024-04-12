@@ -1,14 +1,22 @@
-## DevRev Snaps TypeScript Template
+## Creating a helloworld snap-in
 
-This repository contains a template for the functions that can be deployed as
-part of Snap-Ins.
+There was no reference to what a helloworld snap-in was, so here we have console logged "Hello world" whenever a new workitem is created 
 
-For more reference on Snap-Ins, please refer to the [documentation](https://github.com/devrev/snap-in-docs)
-
-### Getting started with the template
-1. Create a new repository from this template.
-2. In the new repository, you can add functions at path `src/functions` where the folder name corresponds to the function name in your manifest file.
-3. Each function you add will also need to be mentioned in `src/function-factory.ts` .
+### Steps to create a snap-in
+1. download Devrev CLI and jq
+2. Next authenticate yourself using: (org-slug is basically the org name user is associated with) 
+ ```
+ devrev profiles authenticate -o <dev-org-slug> -u <youremail@yourdomain.com>
+ ```
+3. Now create a folder and run the following command in the terminal of that directory
+```
+devrev snap_in_version init
+```
+4. This will create a snap-in template codein that folder
+5. There will be many files/folders in the template, but our main focus is on just few files
+6. First is manifest.yaml, here we define the name of our snap-in, its description,functions and event(command/automation) etc
+7. Now based on the fuctions defined in this .yaml, we define the fuctions in the function folder
+8. Here for hello_world snap-in 
 
 ### Testing locally
 You can test your code by adding test events under `src/fixtures` similar to the example event provided. You can add keyring values to the event payload to test API calls as well.
